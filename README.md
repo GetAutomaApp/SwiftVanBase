@@ -9,4 +9,5 @@ git clone --recurse-submodules --remote-submodules https://github.com/GetAutomaA
 cd Base
 npm run install:all
 npm run dev
+fly launch
 ```
