@@ -1,231 +1,56 @@
 import SwiftVan
 
-// MARK: - Models
+// MARK: - Counter App
 
-struct Project {
-    let name: String
-    let description: String
-    let image: String
-    let github: String?
-    let website: String?
-}
-
-struct Social {
-    let name: String
-    let url: String
-}
-
-// MARK: - State
-
-nonisolated(unsafe) let projects = State([
-    Project(
-        name: "GetAutoma",
-        description:
-            "Automation-first platform and tooling focused on reducing friction in real workflows.",
-        image: "/assets/getautoma.png",
-        github: "https://github.com/GetAutomaApp",
-        website: "https://getautoma.app",
-    ),
-    Project(
-        name: "SwiftVan",
-        description:
-            "A Swift-first UI-style DSL for building websites that compile to WebAssembly.",
-        image: "/assets/swiftvan.png",
-        github: "https://github.com/GetAutomaApp/SwiftVan",
-        website: nil,
-    ),
-    Project(
-        name: "Coming Soon...",
-        description:
-            "I'm working on some more impressive projects at the moment, can't wait to share@",
-        image: "/assets/ellipsis.png",
-        github: nil,
-        website: nil,
-    ),
-])
-
-nonisolated(unsafe) let socials = State([
-    Social(name: "GitHub", url: "https://github.com/adoniscodes"),
-    Social(name: "YouTube", url: "https://youtube.com/@adoniscodes"),
-    Social(name: "Instagram", url: "https://instagram.com/adoniscodes_"),
-    Social(name: "Strava", url: "https://www.strava.com/athletes/196078897"),
-    Social(name: "Printables", url: "https://www.printables.com/@adoniscodes_3658566"),
-])
-
-// MARK: - Header
-
-final class Header {
+final class CounterApp {
     func render() -> AnyElement {
-        Div(attributes: { ["className": "section header"] }) {
+        let count = State(0)
 
-            Div(attributes: { ["className": "title"] }) {
-                Text({ "Simon Ferns" })
-            }
+        return Div(attributes: { ["className": "counter"] }) {
 
-            Div(attributes: { ["className": "subtitle"] }) {
-                Text({
-                    "I dabble in software engineering, recreational programming, 3D printing, travelling, running, and working out."
-                })
-            }
-        }
-    }
-}
-
-// MARK: - Projects
-
-final class ProjectCard {
-    func render(_ project: Project) -> AnyElement {
-        Div(attributes: { ["className": "project-card"] }) {
-
-            Image(attributes: {
-                [
-                    "src": project.image,
-                    "className": "project-image",
-                ]
-            })
-
-            Div(attributes: { ["className": "project-body"] }) {
-
-                Div(attributes: { ["className": "project-title"] }) {
-                    Text({ project.name })
+            // Logo
+            Image(
+                attributes: {
+                    [
+                        "src": "/assets/swiftvan.png",
+                        "alt": "SwiftVan Logo",
+                        "className": "logo",
+                    ]
                 }
+            )
 
-                Div(attributes: { ["className": "project-desc"] }) {
-                    Text({ project.description })
-                }
-
-                Div(attributes: { ["className": "project-links"] }) {
-                    If(
-                        { project.github != nil },
-                        states: [],
-                        If: {
-                            HyperLink(
-                                attributes: {
-                                    [
-                                        "href": project.github!,
-                                        "target": "_blank",
-                                        "className": "button",
-                                    ]
-                                }
-                            ) {
-                                Text({ "GitHub" })
-                            }
-                        }
-                    )
-
-                    If(
-                        { project.website != nil },
-                        states: [],
-                        If: {
-                            HyperLink(
-                                attributes: {
-                                    [
-                                        "href": project.website!,
-                                        "target": "_blank",
-                                        "className": "button secondary",
-                                    ]
-                                }
-                            ) {
-                                Text({ "Website" })
-                            }
-                        },
-                    )
-                }
-            }
-        }
-    }
-}
-
-final class ProjectsSection {
-    func render() -> AnyElement {
-        Div(attributes: { ["className": "section"] }) {
-
-            Div(attributes: { ["className": "section-title"] }) {
-                Text({ "Projects" })
+            // Counter value
+            Div(attributes: { ["className": "counter-value"] }) {
+                Text { "❤️ " }
+                Text { count }
             }
 
-            ForEach(items: projects) { project in
-                ProjectCard().render(project)
-            }
-        }
-    }
-}
+            // Controls
+            Div(attributes: { ["className": "counter-buttons"] }) {
 
-// MARK: - Socials
-
-final class SocialsSection {
-    func render() -> AnyElement {
-        Div(attributes: { ["className": "section"] }) {
-
-            Div(attributes: { ["className": "section-title"] }) {
-                Text({ "Socials" })
-            }
-
-            Div(attributes: { ["className": "socials"] }) {
-                ForEach(items: socials) { social in
-                    HyperLink(
-                        attributes: {
-                            [
-                                "href": social.url,
-                                "target": "_blank",
-                                "className": "social-link",
-                            ]
-                        }
-                    ) {
-                        Text({ social.name })
-                    }
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Contact
-
-final class ContactSection {
-    func render() -> AnyElement {
-        Div(attributes: { ["className": "section contact"] }) {
-
-            Div(attributes: { ["className": "section-title"] }) {
-                Text({ "Contact" })
-            }
-
-            Div(attributes: { ["className": "contact-muted"] }) {
-                Text({
-                    "Not looking for employment. Open to collaboration and serious conversations."
-                })
-            }
-
-            Div(attributes: { ["className": "contact-email"] }) {
-                HyperLink(
-                    attributes: {
-                        [
-                            "href": "mailto:simon@simonferns.com",
-                            "className": "email-link",
-                        ]
+                Button(
+                    attributes: { ["className": "button"] },
+                    onClick: {
+                        count.value += 1
                     }
                 ) {
-                    Text({ "simon@simonferns.com" })
+                    Text { "👍 Increment" }
+                }
+
+                Button(
+                    attributes: { ["className": "button secondary"] },
+                    onClick: {
+                        count.value -= 1
+                    }
+                ) {
+                    Text { "👎 Decrement" }
                 }
             }
-        }
-    }
-}
-
-// MARK: - App Root
-
-final class App {
-    func render() -> AnyElement {
-        Div(attributes: { ["className": "container"] }) {
-            Header().render()
-            SocialsSection().render()
-            ProjectsSection().render()
-            ContactSection().render()
         }
     }
 }
 
 // MARK: - Mount
 
-let renderer = DomRenderer(root: App().render())
+let renderer = DomRenderer(root: CounterApp().render())
 renderer.mount()

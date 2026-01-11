@@ -1,5 +1,5 @@
 # Base
-Automa's Base Repository used for everything!
+SwiftVan Base Repository used for creating simple websites!
 
 # Setup
 
