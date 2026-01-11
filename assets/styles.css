@@ -1,35 +1,75 @@
-.logo {
-  width: 96px;
-  height: auto;
-  margin-bottom: 24px;
+:root {
+  --accent: #ff5a1f;
+  --text: #111;
+  --muted: #666;
+  --border: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #ffffff;
+  color: var(--text);
 }
 
 .counter {
-  max-width: 320px;
-  margin: 80px auto;
+  max-width: 360px;
+  margin: 96px auto;
   text-align: center;
-  font-family: system-ui, sans-serif;
+}
+
+.logo {
+  width: 96px;
+  height: auto;
+  margin-bottom: 32px;
 }
 
 .counter-value {
-  font-size: 32px;
-  margin-bottom: 16px;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 .counter-buttons {
   display: flex;
   gap: 12px;
   justify-content: center;
+  margin-bottom: 24px;
 }
 
 .button {
-  padding: 8px 14px;
-  border: 1px solid #111;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
   background: none;
+  color: var(--text);
   cursor: pointer;
+  font-size: 14px;
 }
 
-.button.secondary {
-  border-color: #777;
-  color: #555;
+.button.primary {
+  border-color: var(--accent);
+  color: var(--accent);
 }
+
+.button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.button.link {
+  border: none;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+}
+
