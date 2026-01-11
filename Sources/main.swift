@@ -22,15 +22,15 @@ final class CounterApp {
             // Counter value
             Div(attributes: { ["className": "counter-value"] }) {
                 Text { "❤️ " }
-                Text { count }
+                Text { "\(count.value)" }
             }
 
             // Controls
             Div(attributes: { ["className": "counter-buttons"] }) {
 
                 Button(
-                    attributes: { ["className": "button"] },
-                    onClick: {
+                    { ["className": "button primary"] },
+                    onclick: {
                         count.value += 1
                     }
                 ) {
@@ -38,13 +38,33 @@ final class CounterApp {
                 }
 
                 Button(
-                    attributes: { ["className": "button secondary"] },
-                    onClick: {
+                    { ["className": "button"] },
+                    onclick: {
                         count.value -= 1
                     }
                 ) {
                     Text { "👎 Decrement" }
                 }
+            }
+
+            // Getting started hint
+            Div(attributes: { ["className": "hint"] }) {
+                Text {
+                    #"To get started, edit "Sources/main.swift""#
+                }
+            }
+
+            // Docs button
+            HyperLink(
+                attributes: {
+                    [
+                        "href": "https://github.com/GetAutomaApp/SwiftVan",
+                        "target": "_blank",
+                        "className": "button link",
+                    ]
+                }
+            ) {
+                Text { "📘 Documentation" }
             }
         }
     }
